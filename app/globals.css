@@ -1,27 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+::-webkit-scrollbar {
+    width: 5px;
+    height: 4px;
 }
 
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 12px;
+}
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    @apply dark:bg-dark bg-light 
+}
+.container {
+    @apply m-auto max-w-10xl
+}
+.app-nav {
+    @apply shadow-md py-2  bg-light dark:bg-dark dark:text-light text-black
+}
+
+.link {
+    @apply font-bold hover:text-primary hover:border-b-primary transition relative p-2 overflow-hidden duration-500 delay-500
+}
+.link::before, .link::after    {
+    @apply absolute rounded w-full bg-primary transition-all duration-500;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0px;
+    left: -100%;
+    transition-property: left, box-shadow;
+    transition-delay: 0ms, 500ms;
+}
+
+
+.link span::before, .link span::after {
+    @apply absolute h-full bg-primary transition-all duration-500 ;
+    width: 2px;
+    content: "";
+    left: 0px;
+    top: -50%;
+    transform: translateY(-50%) translateX(0);
+    transition-property: top, box-shadow;
+    transition-delay: 0ms, 500ms;
+}
+
+.link::after {
+    top: 0px;
+    left: 100%;
+}
+
+.link span::after {
+    left: 100%;
+    top: 0%;
+    transform: translateY(100%) translateX(-100%);
+}
+.link:hover span::before, 
+.link:hover span::after,
+.link:hover::before, 
+.link:hover::after  {
+    box-shadow: 1px 1px 10px #00C9A7;
+}
+.link:hover span::before {
+    top: 50%;
+}
+.link:hover span::after {
+    top: -100%;
+}
+.link:hover::before, .link:hover::after {
+    left: 0;
+}
+.logo {
+    @apply flex items-center gap-2 text-2xl font-black 
 }
