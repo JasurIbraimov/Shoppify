@@ -1,8 +1,9 @@
+import { FaShoppingCart, FaBorderAll, FaStar, FaShoppingBag } from "react-icons/fa"
 export const NavLinks = [
-    { href: '/', key: 'Gallery', text: 'Gallery' },
-    { href: '/', key: 'Cart', text: 'Your Cart' },
-    { href: '/', key: 'Favorites', text: 'Favorite Products' },
-    { href: '/', key: 'Become Seller', text: 'Become a Partner' },
+    { href: '/', key: 'Gallery', text: 'Gallery', icon: FaBorderAll},
+    { href: '/', key: 'Cart', text: 'Your Cart', icon: FaShoppingCart },
+    { href: '/', key: 'Favorites', text: 'Favorite Products', icon: FaStar},
+    { href: '/', key: 'Become Seller', text: 'Become a Partner', icon: FaShoppingBag },
   ];
   
   export const categoryFilters = [

@@ -1,8 +1,8 @@
-import './globals.css'
+import "./globals.css";
 
 // Components
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata = {
     title: "Shoppify",
@@ -18,7 +18,9 @@ export default function RootLayout({
         <html lang="en">
             <body>
                 <Navbar />
-                <main>{children}</main>
+                <main>
+                    <div className="container">{children}</div>
+                </main>
                 <Footer />
             </body>
         </html>

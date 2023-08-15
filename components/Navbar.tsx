@@ -20,8 +20,9 @@ const Navbar = () => {
 
                 <ul className="xl:flex hidden text-base gap-5">
                     {NavLinks.map((link) => (
-                        <Link className="link" href={link.href} key={link.key}>
-                            <span>{link.text}</span>
+                        <Link className="link flex items-center" href={link.href} key={link.key}>
+                            {<link.icon />}
+                            <span className="ml-1">{link.text}</span>
                         </Link>
                     ))}
                 </ul>

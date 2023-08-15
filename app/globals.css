@@ -11,28 +11,44 @@
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
+    @apply bg-primary;
+    width: 8px;
     height: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    @apply bg-secondary;
     border-radius: 12px;
 }
+
 body {
-    @apply dark:bg-dark bg-light 
+    @apply dark:bg-dark flex flex-col bg-light;
+    min-height: 100vh;
 }
+
+footer {
+    flex-shrink: 0;
+}
+
+main {
+    flex: 1 0 auto;
+    margin-top: 100px;
+}
+
 .container {
-    @apply m-auto max-w-10xl
+    @apply m-auto max-w-10xl;
 }
+
 .app-nav {
-    @apply shadow-md py-2  bg-light dark:bg-dark dark:text-light text-black
+    @apply bg-light bg-opacity-25 backdrop-filter backdrop-blur-md p-6 fixed z-10 w-full border-b border-primary;
+    margin-top: 0;
 }
 
 .link {
-    @apply font-bold hover:text-primary hover:border-b-primary transition relative p-2 overflow-hidden duration-500 delay-500
+    @apply font-bold hover:text-primary hover:border-b-primary transition relative p-2 overflow-hidden duration-500 delay-500;
 }
-.link::before, .link::after    {
+.link::before,
+.link::after {
     @apply absolute rounded w-full bg-primary transition-all duration-500;
     content: "";
     position: absolute;
@@ -44,9 +60,9 @@ body {
     transition-delay: 0ms, 500ms;
 }
 
-
-.link span::before, .link span::after {
-    @apply absolute h-full bg-primary transition-all duration-500 ;
+.link span::before,
+.link span::after {
+    @apply absolute h-full bg-primary transition-all duration-500;
     width: 2px;
     content: "";
     left: 0px;
@@ -66,21 +82,17 @@ body {
     top: 0%;
     transform: translateY(100%) translateX(-100%);
 }
-.link:hover span::before, 
-.link:hover span::after,
-.link:hover::before, 
-.link:hover::after  {
-    box-shadow: 1px 1px 10px #00C9A7;
-}
+
 .link:hover span::before {
     top: 50%;
 }
 .link:hover span::after {
     top: -100%;
 }
-.link:hover::before, .link:hover::after {
+.link:hover::before,
+.link:hover::after {
     left: 0;
 }
 .logo {
-    @apply flex items-center gap-2 text-2xl font-black 
+    @apply flex items-center gap-2 text-2xl font-black;
 }

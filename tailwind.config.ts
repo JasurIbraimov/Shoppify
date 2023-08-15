@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         "primary": "#00C9A7",
-        "secondary": "#4B31A1",
+        "secondary": "#35327c",
         "light": "#EFFCF8",
         "dark": "#545479",
         "danger": "#FF9B82",
@@ -18,7 +18,7 @@ const config: Config = {
         "success": "#CDEE8F"
       },
       maxWidth: {
-        "10xl": "1680px"
+        "10xl": "1440px"
       },
     },
   },
