@@ -21,6 +21,11 @@ const Product = g.model("Product", {
     discount: g.int().default(0)
 });
 
+
+const jwt = auth.JWT({
+    issuer: "grafbase",
+    secret: "",
+})
 export default config({
     schema: g,
 });

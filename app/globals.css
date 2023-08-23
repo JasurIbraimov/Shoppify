@@ -44,7 +44,7 @@ main {
     margin-top: 0;
 }
 .footer {
-    @apply bg-dark py-3 text-white
+    @apply bg-dark py-3 text-white px-3
 }
 .nav-link {
     @apply font-bold hover:text-primary hover:border-b-primary transition relative p-2 overflow-hidden duration-500 delay-500;
