@@ -22,7 +22,7 @@
 }
 
 body {
-    @apply dark:bg-dark flex flex-col bg-light;
+    @apply dark:bg-dark flex flex-col bg-light text-black dark:text-white;
     min-height: 100vh;
 }
 
@@ -40,15 +40,18 @@ main {
 }
 
 .app-nav {
-    @apply bg-light bg-opacity-25 backdrop-filter backdrop-blur-md p-6 fixed z-10 w-full border-b border-primary;
+    @apply bg-light bg-opacity-25 backdrop-filter backdrop-blur-md p-6 fixed z-10 w-full;
     margin-top: 0;
 }
-
-.link {
+.footer {
+    @apply bg-dark py-3 text-white
+}
+.nav-link {
     @apply font-bold hover:text-primary hover:border-b-primary transition relative p-2 overflow-hidden duration-500 delay-500;
 }
-.link::before,
-.link::after {
+
+.nav-link::before,
+.nav-link::after {
     @apply absolute rounded w-full bg-primary transition-all duration-500;
     content: "";
     position: absolute;
@@ -60,8 +63,8 @@ main {
     transition-delay: 0ms, 500ms;
 }
 
-.link span::before,
-.link span::after {
+.nav-link span::before,
+.nav-link span::after {
     @apply absolute h-full bg-primary transition-all duration-500;
     width: 2px;
     content: "";
@@ -72,27 +75,30 @@ main {
     transition-delay: 0ms, 500ms;
 }
 
-.link::after {
+.nav-link::after {
     top: 0px;
     left: 100%;
 }
 
-.link span::after {
+.nav-link span::after {
     left: 100%;
     top: 0%;
     transform: translateY(100%) translateX(-100%);
 }
 
-.link:hover span::before {
+.nav-link:hover span::before {
     top: 50%;
 }
-.link:hover span::after {
+.nav-link:hover span::after {
     top: -100%;
 }
-.link:hover::before,
-.link:hover::after {
+.nav-link:hover::before,
+.nav-link:hover::after {
     left: 0;
 }
 .logo {
     @apply flex items-center gap-2 text-2xl font-black;
 }
+.link {
+    @apply hover:text-primary duration-200 transition 
+} 
