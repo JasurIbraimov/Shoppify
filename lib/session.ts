@@ -8,20 +8,28 @@ import { SessionInterface, UserProfile } from "@/common.types";
 import { createUser, getUser } from "./actions";
 
 export const authOptions: NextAuthOptions = {
+    secret: process.env.NEXTAUTH_SECRET,
+    session: {strategy: "jwt"},
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         }),
     ],
-    // jwt: {
-    //     encode: ({secret, token}) => {
-    //         return ""
-    //     },
-    //     decode: async ({secret, token}) => {
-    //         return ""
-    //     }
-    // },
+    jwt: {
+        encode: ({secret, token}) => {
+            const encodedToken = jsonwebtoken.sign({
+                ...token,
+                iss: "grafbase",
+                exp: Math.floor(Date.now() / 1000)  + 60 * 60  // 13 hours
+            }, secret);
+            return encodedToken;
+        },
+        decode: async ({secret, token}) => {
+            const decodedToken = jsonwebtoken.verify(token!, secret);
+            return decodedToken as JWT;
+        }
+    },
     theme: {
         colorScheme: "light",
         logo: "/logo.svg",

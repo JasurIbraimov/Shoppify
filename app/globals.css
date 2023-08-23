@@ -47,9 +47,11 @@ main {
     @apply bg-dark py-3 text-white px-3
 }
 .nav-link {
-    @apply font-bold hover:text-primary hover:border-b-primary transition relative p-2 overflow-hidden duration-500 delay-500;
+    @apply flex items-center font-semibold hover:text-primary hover:border-b-primary transition relative p-2 overflow-hidden duration-500 delay-500;
 }
-
+.nav-link span {
+    @apply ml-1
+}
 .nav-link::before,
 .nav-link::after {
     @apply absolute rounded w-full bg-primary transition-all duration-500;

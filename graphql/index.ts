@@ -4,8 +4,7 @@ export const getUserQuery = `
             id
             name 
             avatarUrl
-            description 
-            favorites
+            description
         }
     }
 `

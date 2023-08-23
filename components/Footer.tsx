@@ -37,7 +37,7 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-wrap gap-12">
                   {footerLinks.map(footerLink => (
-                    <FooterCol title={footerLink.title} links={footerLink.links} />
+                    <FooterCol key={footerLink.title} title={footerLink.title} links={footerLink.links} />
                   ))}
                 </div>
 
