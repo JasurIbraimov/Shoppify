@@ -104,3 +104,11 @@ main {
 .link {
     @apply hover:text-primary duration-200 transition 
 } 
+
+.flexCenter {
+    @apply flex items-center justify-center
+}
+
+.profile-menu {
+    @apply flex-col absolute right-1/2 translate-x-1/2 mt-3 p-7 sm:min-w-[300px] min-w-max rounded-xl bg-light border shadow-menu
+}

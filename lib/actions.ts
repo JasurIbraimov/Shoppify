@@ -32,7 +32,7 @@ export const createUser = (name: string, email: string, avatarUrl: string) => {
     client.setHeader("x-api-key", apiKey);
 
     const variables = {
-        input: { name, email, avatarUrl },
+        input: { name: name, email: email, avatarUrl: avatarUrl },
     };
 
     return makeGraphQlRequest(createUserMutation, variables);

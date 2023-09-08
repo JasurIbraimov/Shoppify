@@ -3,8 +3,8 @@ import { NavLinks } from "@/constants";
 import AuthProviders from "./AuthProviders";
 import Logo from "./Logo";
 import { getCurrentUser } from "@/lib/session";
-import Image from "next/image";
 import { FaPlus } from "react-icons/fa";
+import ProfileMenu from "./ProfileMenu";
 
 const Navbar = async () => {
     const session = await getCurrentUser();
@@ -28,19 +28,13 @@ const Navbar = async () => {
                 <div className="gap-4 flex items-center">
                     {session?.user ? (
                         <>
-                            <Image
-                                src={session.user.image || "/noimage.jpg"}
-                                className="rounded-full border border-primary"
-                                alt="User Avatar"
-                                width={40}
-                                height={40}
-                            />
+                            <ProfileMenu session={session}/>
                             <Link className="nav-link " href="/add-product">
                                 <FaPlus />
                                 <span> Add product</span>
                             </Link>
                         </>
-                    ) : (
+                    ) : ( 
                         <AuthProviders />
                     )}
                 </div>

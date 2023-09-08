@@ -19,7 +19,7 @@ const AuthProviders = () => {
     useEffect(() => {
         const fetchProviders = async () => {
             const res = await getProviders();
-            console.log(res)
+            console.log(res);
             setProviders(res);
         };
 
@@ -30,7 +30,13 @@ const AuthProviders = () => {
         return (
             <div>
                 {Object.values(providers).map((provider, index) => (
-                    <button onClick={() => signIn(provider.id)} key={index}>{provider.name}</button>
+                    <button
+                        className="nav-link"
+                        onClick={() => signIn(provider.id)}
+                        key={index}
+                    >
+                        <span>Sign in {provider.name}</span>
+                    </button>
                 ))}
             </div>
         );

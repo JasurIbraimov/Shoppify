@@ -9,7 +9,7 @@ import { createUser, getUser } from "./actions";
 
 export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
-    session: {strategy: "jwt"},
+    session: { strategy: "jwt" },
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -17,18 +17,21 @@ export const authOptions: NextAuthOptions = {
         }),
     ],
     jwt: {
-        encode: ({secret, token}) => {
-            const encodedToken = jsonwebtoken.sign({
-                ...token,
-                iss: "grafbase",
-                exp: Math.floor(Date.now() / 1000)  + 60 * 60  // 13 hours
-            }, secret);
+        encode: ({ secret, token }) => {
+            const encodedToken = jsonwebtoken.sign(
+                {
+                    ...token,
+                    iss: "grafbase",
+                    exp: Math.floor(Date.now() / 1000) + 60 * 60, // 13 hours
+                },
+                secret
+            );
             return encodedToken;
         },
-        decode: async ({secret, token}) => {
+        decode: async ({ secret, token }) => {
             const decodedToken = jsonwebtoken.verify(token!, secret);
             return decodedToken as JWT;
-        }
+        },
     },
     theme: {
         colorScheme: "light",
@@ -36,19 +39,20 @@ export const authOptions: NextAuthOptions = {
     },
     callbacks: {
         async session({ session }) {
-            const email = session?.user?.email as string 
+            const email = session?.user?.email as string;
             try {
-                const data = await getUser(email) as {user? : UserProfile}
+                const data = (await getUser(email)) as { user?: UserProfile };
+                
                 const newSession = {
-                    ...session, 
+                    ...session,
                     user: {
-                        ...session.user, 
-                        ...data?.user
-                    }
-                }
+                        ...session.user,
+                        ...data?.user,
+                    },
+                };
                 return newSession;
             } catch (error) {
-                console.error(error)
+                console.error(error);
                 return session;
             }
         },
@@ -59,7 +63,7 @@ export const authOptions: NextAuthOptions = {
                     user?: UserProfile;
                 };
                 // if not create them
-                if (!userExists) {
+                if (!userExists.user) {
                     await createUser(
                         user.name as string,
                         user.email as string,
