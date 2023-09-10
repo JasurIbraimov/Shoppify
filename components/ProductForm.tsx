@@ -1,54 +1,72 @@
 "use client";
 
-import { SessionInterface } from "@/common.types";
+import { ProductForm, SessionInterface } from "@/common.types";
 import Image from "next/image";
 import FormField from "./FormField";
 import { categoryFilters } from "@/constants";
 import CustomMenu from "./CustomMenu";
 import { useState } from "react";
+import Button from "./Button";
+import { createNewProduct, fetchToken } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 
 interface IProductForm {
     session: SessionInterface;
     type: "create" | "edit";
 }
 const ProductForm: React.FC<IProductForm> = ({ session, type }) => {
-    const handleFormSubmit = (e: React.FormEvent) => {};
-
-    const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault()
-        const file = e.target.files?.[0]
-        if(!file) return;
-
-        if(!file.type.includes("image")) {
-            return;
-        }
-
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload = () => {
-            const result = reader.result as string; 
-            handleStateChange("image", result);
-        }
-
-    };
-    
-    const handleStateChange = (fieldName: string, value: string) => {
-        setForm((prevForm) => ({
-            ...prevForm,
-            [fieldName]: value
-        }))
-    };
-
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<ProductForm>({
         image: "",
         description: "",
         title: "",
-        price: "",
-        discount: "0",
+        price: 0,
+        discount: 0,
         category: "",
     });
+    const router = useRouter();
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const handleFormSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
 
-    const [isSubmitting, setIsSubmitting] = useState(false)
+        const { token } = await fetchToken();
+
+        try {
+            if (type === "create") {
+                await createNewProduct(form, session?.user?.id, token);
+
+                router.push("/");
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        if (!file.type.includes("image")) {
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const result = reader.result as string;
+            handleStateChange("image", result);
+        };
+    };
+
+    const handleStateChange = (fieldName: string, value: string|number) => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            [fieldName]: value,
+        }));
+    };
 
     return (
         <form onSubmit={handleFormSubmit} className="flexStart form">
@@ -92,7 +110,7 @@ const ProductForm: React.FC<IProductForm> = ({ session, type }) => {
                 type="number"
                 state={form.price}
                 placeholder="Your product price"
-                setState={(value) => handleStateChange("price", value)}
+                setState={(value) => handleStateChange("price", parseFloat(value))}
             />
             <FormField
                 notRequired
@@ -100,7 +118,7 @@ const ProductForm: React.FC<IProductForm> = ({ session, type }) => {
                 type="number"
                 state={form.discount}
                 placeholder="Your discount for this product"
-                setState={(value) => handleStateChange("price", value)}
+                setState={(value) => handleStateChange("discount", parseInt(value))}
             />
 
             <CustomMenu
@@ -109,9 +127,12 @@ const ProductForm: React.FC<IProductForm> = ({ session, type }) => {
                 state={form.category}
                 setState={(value) => handleStateChange("category", value)}
             />
-            <div className="flexStart w-full">
-                <button className="btn w-1/2">Create</button>
-            </div>
+            <Button
+                title={`${type.replace(type[0], type[0].toUpperCase())}${
+                    isSubmitting ? "ing" : ""
+                }`}
+                type="submit"
+            />
         </form>
     );
 };

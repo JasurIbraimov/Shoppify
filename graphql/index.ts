@@ -22,3 +22,35 @@ export const createUserMutation = `
         }
     }
 `
+
+export const createProductMutation = `
+    mutation CreateProduct($input: ProductCreateInput!) {
+        productCreate(input: $input) {
+            product {
+                id
+                title
+                description
+                createdBy {
+                    email
+                    name
+                }
+            }
+        }
+    }
+`
+
+export const updateProductMutation = `
+    mutation CreateProduct($input: ProductCreateInput!) {
+        productCreate(input: $input) {
+            product {
+                id
+                title
+                description
+                createdBy {
+                    email
+                    name
+                }
+            }
+        }
+    }
+`

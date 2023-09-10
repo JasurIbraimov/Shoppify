@@ -2,7 +2,7 @@ import React from "react";
 interface IFormFieldProps {
     title: string;
     type?: React.HTMLInputTypeAttribute;
-    state: string;
+    state: string|number|boolean;
     placeholder: string;
     isTextarea?: boolean;
     setState: (value: string) => void;
@@ -27,7 +27,7 @@ const FormField: React.FC<IFormFieldProps> = ({
                 <textarea
                     id={title}
                     placeholder={placeholder}
-                    value={state}
+                    value={state as string}
                     required={!notRequired}
                     className="form-field-input"
                     onChange={(e) => setState(e.target.value)}
@@ -36,7 +36,7 @@ const FormField: React.FC<IFormFieldProps> = ({
                 <input
                     id={title}
                     placeholder={placeholder}
-                    value={state}
+                    value={state as string}
                     required={!notRequired}
                     className="form-field-input"
                     onChange={(e) => setState(e.target.value)}

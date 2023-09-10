@@ -1,4 +1,9 @@
-import { createUserMutation, getUserQuery } from "@/graphql";
+import { ProductForm } from "@/common.types";
+import {
+    createProductMutation,
+    createUserMutation,
+    getUserQuery,
+} from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -36,4 +41,47 @@ export const createUser = (name: string, email: string, avatarUrl: string) => {
     };
 
     return makeGraphQlRequest(createUserMutation, variables);
+};
+
+export const fetchToken = async () => {
+    try {
+        const response = await fetch(`${serverUrl}/api/auth/token`)
+        return response.json()
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const uploadImage = async (imagePath: string) => {
+    try {
+        const response = await fetch(`${serverUrl}/api/upload`, {
+            method: "POST",
+            body: JSON.stringify({ path: imagePath }),
+        });
+        return response.json();
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const createNewProduct = async (
+    form: ProductForm,
+    creatorId: string,
+    token: string
+) => {
+    const imageURL = await uploadImage(form.image);
+    if (imageURL.url) {
+        client.setHeader("Authorization", `Bearer ${token}`); // make sure if user logged in
+
+        const variables = {
+            input: {
+                ...form,
+                image: imageURL.url,
+                createdBy: {
+                    link: creatorId,
+                },
+            },
+        };
+        return makeGraphQlRequest(createProductMutation, variables);
+    }
 };
