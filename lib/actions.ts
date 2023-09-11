@@ -2,7 +2,10 @@ import { ProductForm } from "@/common.types";
 import {
     createProductMutation,
     createUserMutation,
+    getProductByIdQuery,
+    getProductsOfUserQuery,
     getUserQuery,
+    productsQuery,
 } from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 
@@ -85,3 +88,19 @@ export const createNewProduct = async (
         return makeGraphQlRequest(createProductMutation, variables);
     }
 };
+
+export const fetchAllProducts = async (category?: string | null, endCursor?: string | null) => {
+    client.setHeader("x-api-key", apiKey);
+    return makeGraphQlRequest(productsQuery, { category, endCursor })
+}
+
+export const getProductDetail = (id: string) => {
+    client.setHeader("x-api-key", apiKey);
+    return makeGraphQlRequest(getProductByIdQuery, { id })
+}
+
+
+export const getUserProducts = (id: string, last?: number) => {
+    client.setHeader("x-api-key", apiKey);
+    return makeGraphQlRequest(getProductsOfUserQuery, { id, last })
+}

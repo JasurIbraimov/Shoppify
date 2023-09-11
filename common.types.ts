@@ -18,9 +18,8 @@ export interface UserProfile {
     id: string;
     name: string;
     email: string;
-    description: string | null;
     avatarUrl: string;
-    favorites: {
+    products: {
         edges: { node: ProductInterface }[];
         pageInfo: {
             hasPreviousPage: boolean;

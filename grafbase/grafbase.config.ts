@@ -1,19 +1,4 @@
 import { g, auth, config } from "@grafbase/sdk";
-
-// @ts-ignore
-const User = g
-    .model("User", {
-        name: g.string().length({ min: 2, max: 20 }),
-        email: g.string().unique(),
-        avatarUrl: g.url(),
-        description: g.string().length({ max: 500 }).optional(),
-        favorites: g
-            .relation(() => Product)
-            .list()
-            .optional(),
-    })
-    .auth((rules) => rules.public().read());
-
 // @ts-ignore
 const Product = g
     .model("Product", {
@@ -29,6 +14,20 @@ const Product = g
         rules.public().read();
         rules.private().create().delete().update();
     });
+
+// @ts-ignore
+const User = g
+    .model("User", {
+        name: g.string().length({ min: 2, max: 20 }),
+        email: g.string().unique(),
+        avatarUrl: g.url(),
+        products: g
+            .relation(() => Product)
+            .list()
+            .optional(),
+    })
+    .auth((rules) => rules.public().read());
+
 
 const jwt = auth.JWT({
     issuer: "grafbase",
