@@ -16,7 +16,7 @@ const Button: React.FC<IButtonProps> = ({
     return (
         <div className="flexStart w-full">
             <button
-                className="btn w-1/2"
+                className="btn w-1/2 capitalize"
                 type={type}
                 disabled={isSubmitting}
                 onClick={handleOnClick}

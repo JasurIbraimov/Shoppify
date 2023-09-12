@@ -174,7 +174,7 @@ textarea {
     @apply grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10 mt-10 w-full;
 }
 .no-result-text {
-    @apply w-full text-center my-10 px-2;
+    @apply w-full text-center my-10 px-2 text-2xl text-gray-500;
 }
 
 .profile-menu-items {
@@ -186,20 +186,26 @@ textarea {
 }
 
 figure {
-    @apply bg-no-repeat 
+    @apply bg-no-repeat;
 }
-  
+
 figure:hover img {
-    @apply opacity-0
+    @apply opacity-0;
 }
-  
+
 figure img {
-    @apply block w-full pointer-events-none
+    @apply block w-full pointer-events-none;
 }
-  
+
 .discount {
-    @apply absolute font-semibold -top-3/4 -left-6 text-white text-2xl bg-primary rounded-full px-2 py-1 -rotate-12
+    @apply absolute font-semibold -top-3/4 -left-6 text-white text-2xl bg-primary rounded-full px-2 py-1 -rotate-12;
 }
 
+/* Project Actions */
+.edit-action-btn {
+    @apply p-3 text-gray-100 bg-primary rounded-lg text-sm font-medium hover:bg-primary-200 transition-all duration-500;
+}
 
-
+.delete-action-btn {
+    @apply p-3 text-gray-100 hover:bg-red-600 rounded-lg text-sm font-medium transition-all duration-500;
+}

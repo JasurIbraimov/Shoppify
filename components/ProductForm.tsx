@@ -1,27 +1,32 @@
 "use client";
 
-import { ProductForm, SessionInterface } from "@/common.types";
+import {
+    ProductForm,
+    ProductInterface,
+    SessionInterface,
+} from "@/common.types";
 import Image from "next/image";
 import FormField from "./FormField";
 import { categoryFilters } from "@/constants";
 import CustomMenu from "./CustomMenu";
 import { useState } from "react";
 import Button from "./Button";
-import { createNewProduct, fetchToken } from "@/lib/actions";
+import { createNewProduct, fetchToken, updateProduct } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 
 interface IProductForm {
     session: SessionInterface;
     type: "create" | "edit";
+    product?: ProductInterface;
 }
-const ProductForm: React.FC<IProductForm> = ({ session, type }) => {
+const ProductForm: React.FC<IProductForm> = ({ session, type, product }) => {
     const [form, setForm] = useState<ProductForm>({
-        image: "",
-        description: "",
-        title: "",
-        price: 0,
-        discount: 0,
-        category: "",
+        image: product?.image || "",
+        description: product?.description || "",
+        title: product?.title || "",
+        price: product?.price || 0,
+        discount: product?.discount || 0,
+        category: product?.category || "",
     });
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,9 +39,10 @@ const ProductForm: React.FC<IProductForm> = ({ session, type }) => {
         try {
             if (type === "create") {
                 await createNewProduct(form, session?.user?.id, token);
-
-                router.push("/");
+            } else if (type === "edit") {
+                await updateProduct(form, product?.id as string, token);
             }
+            router.push("/");
         } catch (e) {
             console.error(e);
         } finally {
@@ -61,7 +67,7 @@ const ProductForm: React.FC<IProductForm> = ({ session, type }) => {
         };
     };
 
-    const handleStateChange = (fieldName: string, value: string|number) => {
+    const handleStateChange = (fieldName: string, value: string | number) => {
         setForm((prevForm) => ({
             ...prevForm,
             [fieldName]: value,
@@ -110,7 +116,9 @@ const ProductForm: React.FC<IProductForm> = ({ session, type }) => {
                 type="number"
                 state={form.price}
                 placeholder="Your product price"
-                setState={(value) => handleStateChange("price", parseFloat(value))}
+                setState={(value) =>
+                    handleStateChange("price", parseFloat(value))
+                }
             />
             <FormField
                 notRequired
@@ -118,7 +126,9 @@ const ProductForm: React.FC<IProductForm> = ({ session, type }) => {
                 type="number"
                 state={form.discount}
                 placeholder="Your discount for this product"
-                setState={(value) => handleStateChange("discount", parseInt(value))}
+                setState={(value) =>
+                    handleStateChange("discount", parseInt(value))
+                }
             />
 
             <CustomMenu
@@ -128,8 +138,10 @@ const ProductForm: React.FC<IProductForm> = ({ session, type }) => {
                 setState={(value) => handleStateChange("category", value)}
             />
             <Button
-                title={`${type.replace(type[0], type[0].toUpperCase())}${
-                    isSubmitting ? "ing" : ""
+                title={`${
+                    isSubmitting
+                        ? type.replace(type[type.length - 1], "ing")
+                        : type.replace(type[0], type[0])
                 }`}
                 type="submit"
             />

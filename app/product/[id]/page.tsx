@@ -71,7 +71,7 @@ const ProductDetailPage: NextPage<IProductDetailPageProps> = async ({
             <ProductImage image={image} title={title} />
             {discount > 0 ? (
                 <div className="relative mt-12">
-                    <p className="discount">{discount}%</p>
+                    <p className="discount">-{discount}%</p>
                     <div className="flex">
                         <p className="max-w-2xl font-semibold text-3xl line-through text-warning">
                             ${price}

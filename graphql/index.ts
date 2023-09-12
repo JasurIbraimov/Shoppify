@@ -50,8 +50,8 @@ export const getProductsOfUserQuery = `
 `
 
 export const productsQuery = `
-    query getProducts($category: String, $endcursor: String) {
-        productSearch(first: 8, after: $endcursor, filter: {category: {eq: $category}}){
+    query getProducts($category: String, $endCursor: String) {
+        productSearch(first: 8, after: $endCursor, filter: {category: {eq: $category}}){
             pageInfo {
                 hasNextPage
                 hasPreviousPage
@@ -101,6 +101,8 @@ export const createProductMutation = `
                 id
                 title
                 description
+                price
+                discount
                 createdBy {
                     email
                     name
@@ -111,12 +113,14 @@ export const createProductMutation = `
 `
 
 export const updateProductMutation = `
-    mutation CreateProduct($input: ProductCreateInput!) {
-        productCreate(input: $input) {
+    mutation UpdateProduct($id: ID!, $input: ProductUpdateInput!) {
+        productUpdate(by: {id: $id}, input: $input) {
             product {
                 id
                 title
                 description
+                price
+                discount
                 createdBy {
                     email
                     name
@@ -124,4 +128,14 @@ export const updateProductMutation = `
             }
         }
     }
+`
+
+
+export const deleteProductMutation = `
+    mutation DeleteProduct($id: ID!) {
+        productDelete(by: {id: $id}) {
+            deletedId
+        }
+    }
+
 `

@@ -2,10 +2,12 @@ import { ProductForm } from "@/common.types";
 import {
     createProductMutation,
     createUserMutation,
+    deleteProductMutation,
     getProductByIdQuery,
     getProductsOfUserQuery,
     getUserQuery,
     productsQuery,
+    updateProductMutation,
 } from "@/graphql";
 import { GraphQLClient } from "graphql-request";
 
@@ -91,7 +93,7 @@ export const createNewProduct = async (
 
 export const fetchAllProducts = async (category?: string | null, endCursor?: string | null) => {
     client.setHeader("x-api-key", apiKey);
-    return makeGraphQlRequest(productsQuery, { category, endCursor })
+    return makeGraphQlRequest(productsQuery, { category, endCursor: endCursor })
 }
 
 export const getProductDetail = (id: string) => {
@@ -103,4 +105,35 @@ export const getProductDetail = (id: string) => {
 export const getUserProducts = (id: string, last?: number) => {
     client.setHeader("x-api-key", apiKey);
     return makeGraphQlRequest(getProductsOfUserQuery, { id, last })
+}
+
+
+
+export const deleteProduct = (id: string, token: string) => {
+    client.setHeader("Authorization", `Bearer ${token}`); // make sure if user logged in
+
+    return makeGraphQlRequest(deleteProductMutation, { id })
+}
+
+
+export const updateProduct = async (form: ProductForm, id: string, token: string) => {
+    function isBase64DataURL(value: string) {
+        const base64Regex = /^data:image\/[a-z]+;base64,/;
+        return base64Regex.test(value)
+    }
+
+    let updatedForm = {...form, price: {set: form.price}, discount: {set: form.discount}}
+    if(isBase64DataURL(form.image)) {
+        const imageUrl = await uploadImage(form.image)
+        if(imageUrl.url) {
+            updatedForm.image = imageUrl.url;
+        }
+    }
+    const variables = {
+        id, 
+        input: updatedForm
+    }
+    client.setHeader("Authorization", `Bearer ${token}`); // make sure if user logged in
+
+    return makeGraphQlRequest(updateProductMutation, variables)
 }
