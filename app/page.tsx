@@ -1,29 +1,15 @@
-import { ProductInterface } from "@/common.types";
+import { ProductsSearch } from "@/common.types";
 import Categories from "@/components/Categories";
 import LoadMore from "@/components/LoadMore";
 import ProductCard from "@/components/ProductCard";
-import { fetchAllProducts } from "@/lib/actions";
+import {  fetchAllProducts } from "@/lib/actions";
 import { NextPage } from "next";
 
-interface ProductsSearch {
-    productSearch: {
-        edges: {
-            node: ProductInterface;
-        }[];
-        pageInfo: {
-            hasPreviousPage: boolean;
-            hasNextPage: boolean;
-            startCursor: string;
-            endCursor: string;
-        };
-    };
-}
-
 interface IHomeProps {
-    searchParams: {
-        endCursor?: string;
-        category?: string;
-    };
+  searchParams: {
+    endCursor?: string;
+    category?: string;
+  };
 }
 
 export const dynamic = "force-dynamic";
@@ -31,45 +17,43 @@ export const dynamicParams = true;
 export const revalidate = 0;
 
 const Home: NextPage<IHomeProps> = async ({
-    searchParams: { category, endCursor },
+  searchParams: { category, endCursor },
+}: {
+  searchParams: { category: string; endCursor: string };
 }) => {
-    const data = (await fetchAllProducts(
-        category || "Clothes",
-        endCursor
-    )) as ProductsSearch;
-    
+  const data = (await fetchAllProducts(
+    category || "Clothes",
+    endCursor
+  )) as ProductsSearch;
 
-    const projectsToDisplay = data?.productSearch.edges || [];
-    if (projectsToDisplay.length === 0) {
-        return (
-            <section className="flexStart flex-col p-4">
-                <Categories />
-                <p className="no-result-text text-center">
-                    No products found of category{" "}
-                    <span className="font-medium text-primary">
-                        {category || "Clothes"}
-                    </span>
-                    !
-                </p>
-            </section>
-        );
-    }
-
-    const pagination = data?.productSearch?.pageInfo;
-
+  const productsToDisplay = data?.productSearch.edges || [];
+  if (productsToDisplay.length === 0) {
     return (
-        <section>
-            <Categories />
-
-            <section className="products-grid">
-                {projectsToDisplay.map(({ node }) => (
-                    <ProductCard key={node.id} {...node} />
-                ))}
-            </section>
-
-            <LoadMore {...pagination} />
-        </section>
+      <section className="flexStart flex-col p-4">
+        <p className="no-result-text text-center">
+          No products found of category{" "}
+          <span className="font-medium text-primary">
+            {category || "Clothes"}
+          </span>
+          !
+        </p>
+      </section>
     );
+  }
+
+  const pagination = data?.productSearch?.pageInfo;
+
+  return (
+    <section>
+      <section className="products-grid">
+        {productsToDisplay.map(({ node }) => (
+          <ProductCard key={node.id} {...node} />
+        ))}
+      </section>
+
+      <LoadMore {...pagination} />
+    </section>
+  );
 };
 
 export default Home;

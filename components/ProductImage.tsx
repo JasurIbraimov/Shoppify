@@ -19,15 +19,15 @@ const ProductImage:React.FC<IProductImageProps> = ({image, title}) => {
       }
     return (
         <figure
-            className="w-full sm:w-1/2 rounded-2xl"
+            className="w-full md:w-1/2 lg:w-1/3"
             onMouseMove={zoom}
             onMouseOut={() => setBackgroundImage("")}
             style={{ backgroundImage, backgroundPosition }}
         >
             <Image
                 src={image}
-                width={500}
-                height={500}
+                width={400}
+                height={400}
                 className="w-full h-full object-contain"
                 alt={"Image of " + title}
             />

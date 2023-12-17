@@ -1,12 +1,11 @@
-import Image from "next/image";
 import React from "react";
 import Logo from "./Logo";
 import { footerLinks } from "@/constants";
 import Link from "next/link";
-
+import { IconType } from "react-icons";
 interface IFooterCol {
   title: string,
-  links: string[]
+  links: {label: string, url: string, icon: IconType}[]
 }
 
 const FooterCol:React.FC<IFooterCol> = ({title, links}) => {
@@ -15,8 +14,9 @@ const FooterCol:React.FC<IFooterCol> = ({title, links}) => {
       <h4 className="font-semibold">{title}</h4>
       <ul className="flex flex-col">
         {links.map(link => (
-          <Link className="link" href={"/"} key={link}>
-            {link}
+          <Link className="link" href={link.url} key={link.label}>
+            {<link.icon />}
+            <span className="ml-2">{link.label}</span>
           </Link>
         ))}
       </ul>

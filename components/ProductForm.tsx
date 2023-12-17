@@ -140,8 +140,8 @@ const ProductForm: React.FC<IProductForm> = ({ session, type, product }) => {
             <Button
                 title={`${
                     isSubmitting
-                        ? type.replace(type[type.length - 1], "ing")
-                        : type.replace(type[0], type[0])
+                        ? type === "edit" ? "Editing" : "Creating"
+                        : type
                 }`}
                 type="submit"
             />

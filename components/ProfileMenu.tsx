@@ -18,6 +18,7 @@ const ProfileMenu: FC<IProfileMenu> = ({ session }) => {
             <Menu as="div">
                 <Menu.Button
                     className="flexCenter"
+                    
                     onMouseEnter={() => setOpenModal(true)}
                 >
                     <Link href={`/profile/${session?.user.id}`}>
@@ -62,14 +63,6 @@ const ProfileMenu: FC<IProfileMenu> = ({ session }) => {
                         </div>
 
                         <div className="flex flex-col gap-3 pt-10 items-start w-full">
-                            <Menu.Item>
-                                <Link
-                                    href={`/profile/${session?.user?.id}`}
-                                    className="text-sm nav-link"
-                                >
-                                    <span>Settings</span>
-                                </Link>
-                            </Menu.Item>
                             <Menu.Item>
                                 <Link
                                     href={`/profile/${session?.user?.id}`}

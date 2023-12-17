@@ -1,8 +1,6 @@
 import {
-    FaShoppingCart,
-    FaBorderAll,
-    FaStar,
-    FaShoppingBag,
+    FaGithub,
+    FaLinkedin,
 } from "react-icons/fa";
 
 export const categoryFilters = [
@@ -23,38 +21,18 @@ export const categoryFilters = [
 
 export const footerLinks = [
     {
-        title: "Hire developers",
+        title: "Socials",
         links: [
-            "Post a job opening",
-            "Post a freelance project",
-            "Search for developers",
+            {
+                label: "Github",
+                url: "https://github.com/JasurIbraimov",
+                icon: FaGithub
+            },
+            {
+                label: "LinkedIn",
+                url: "https://www.linkedin.com/in/jasur-ibraimov-61b0771b3/",
+                icon: FaLinkedin
+            },
         ],
-    },
-    {
-        title: "Brands",
-        links: [
-            "Advertise with us",
-            "Terms of service",
-            "Privacy policy",
-            "Cookie policy",
-        ],
-    },
-    {
-        title: "Company",
-        links: [
-            "About",
-            "Careers",
-            "Support",
-            "API",
-        ],
-    },
-    {
-        title: "Development Resources",
-        links: [
-            "Freelancing",
-            "Development Hiring",
-            "Development Portfolio",
-            "Development Education",
-        ],
-    },
+    }
 ];

@@ -1,4 +1,7 @@
 import { Session, User } from "next-auth";
+
+
+
 export interface ProductInterface {
     title: string;
     description: string;
@@ -12,6 +15,20 @@ export interface ProductInterface {
         email: string;
         avatarUrl: string;
         id: string;
+    };
+}
+
+export interface ProductsSearch {
+    productSearch: {
+        edges: {
+            node: ProductInterface;
+        }[];
+        pageInfo: {
+            hasPreviousPage: boolean;
+            hasNextPage: boolean;
+            startCursor: string;
+            endCursor: string;
+        };
     };
 }
 export interface UserProfile {

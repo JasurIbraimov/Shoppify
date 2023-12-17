@@ -47,7 +47,7 @@ main {
     @apply bg-dark py-3 text-white px-3;
 }
 .nav-link {
-    @apply flex items-center font-semibold hover:text-primary hover:border-b-primary transition relative p-2 overflow-hidden duration-500 delay-500;
+    @apply flex items-center w-full font-semibold hover:text-primary hover:border-b-primary transition relative p-2 overflow-hidden duration-500 delay-500;
 }
 .nav-link span {
     @apply ml-1;
@@ -102,7 +102,7 @@ main {
     @apply flex items-center gap-2 text-2xl font-black;
 }
 .link {
-    @apply hover:text-primary duration-200 transition;
+    @apply hover:text-primary duration-200 transition flex items-center;
 }
 
 .flexCenter {
@@ -171,7 +171,7 @@ textarea {
     @apply bg-primary px-8 py-4 hover:bg-secondary transition-all duration-500 hover:text-white rounded-xl;
 }
 .products-grid {
-    @apply grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10 mt-10 w-full;
+    @apply grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 mt-10 w-full;
 }
 .no-result-text {
     @apply w-full text-center my-10 px-2 text-2xl text-gray-500;
@@ -182,7 +182,7 @@ textarea {
 }
 
 .profile-card-title {
-    @apply justify-end items-end w-full h-1/3 bg-secondary rounded-b-2xl gap-2 absolute bottom-0 right-0 font-semibold text-lg text-white p-4;
+    @apply justify-end items-end w-full h-1/3 bg-secondary gap-2 absolute bottom-0 right-0 font-semibold text-lg text-white p-4;
 }
 
 figure {
@@ -203,9 +203,9 @@ figure img {
 
 /* Project Actions */
 .edit-action-btn {
-    @apply p-3 text-gray-100 bg-primary rounded-lg text-sm font-medium hover:bg-primary-200 transition-all duration-500;
+    @apply p-1 text-gray-100 bg-primary rounded-lg hover:bg-primary-200 transition-all duration-500;
 }
 
 .delete-action-btn {
-    @apply p-3 text-gray-100 hover:bg-red-600 rounded-lg text-sm font-medium transition-all duration-500;
+    @apply p-1 text-gray-100 hover:bg-red-600 rounded-lg transition-all duration-500;
 }
